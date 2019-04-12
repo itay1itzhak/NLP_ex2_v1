@@ -32,7 +32,7 @@ def forward(data, label, params, dimensions):
     h = sigmoid(z1)
     z2 = np.dot(h,W2) + b2
     y_hat = softmax(z2)
-    J = -np.sum(np.dot(label,np.log(y_hat)))
+    J = -np.sum(np.log(y_hat)*label)
     return {"z1": z1,
             "h": h,
             "z2": z2,
