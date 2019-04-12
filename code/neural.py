@@ -32,7 +32,7 @@ def forward(data, label, params, dimensions):
     h = sigmoid(z1)
     z2 = np.dot(h,W2) + b2
     y_hat = softmax(z2)
-    J = -np.sum(np.log(y_hat)*label)
+    J = -np.sum(label*np.log(y_hat))
     return {"z1": z1,
             "h": h,
             "z2": z2,
@@ -80,10 +80,10 @@ def forward_backward_prop(data, labels, params, dimensions):
     grad_softmax = y_hat - labels
     grad_hidden = np.dot(grad_softmax,W2.T) * sigmoid_grad(h)
 
-    gradW1 = np.dot(grad_hidden,data.T)
-    gradb1 = np.sum(grad_hidden)
-    gradW2 = np.dot(grad_softmax,h.T)
-    gradb2 = np.sum(grad_softmax)
+    gradW1 = np.dot(data.T,grad_hidden)
+    gradb1 = np.sum(grad_hidden,axis=0)
+    gradW2 = np.dot(h.T,grad_softmax)
+    gradb2 = np.sum(grad_softmax,axis=0)
 
     ### END YOUR CODE
 
@@ -124,7 +124,7 @@ def your_sanity_checks():
     """
     print "Running your sanity checks..."
     ### YOUR CODE HERE
-    raise NotImplementedError
+    #raise NotImplementedError
     ### END YOUR CODE
 
 
