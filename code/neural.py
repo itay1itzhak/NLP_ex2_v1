@@ -59,7 +59,12 @@ def forward_backward_prop(data, labels, params, dimensions):
     b2 = np.reshape(params[ofs:ofs + Dy], (1, Dy))
 
     ### YOUR CODE HERE: forward propagation
-    raise NotImplementedError
+    forward_results = forward(data, labels, params, dimensions)
+    Z1 = forward_results['Z1']
+    A = forward_results['A']
+    h = forward_results['h']
+    y_hat = forward_results['y_hat']
+    J = forward_results['J']
     ### END YOUR CODE
 
     ### YOUR CODE HERE: backward propagation
