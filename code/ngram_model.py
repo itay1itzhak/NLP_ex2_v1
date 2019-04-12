@@ -134,7 +134,7 @@ def gridSearch():
     trigram_counts, bigram_counts, unigram_counts, token_count = train_ngrams(S_train)
     lambda1_range =  np.linspace(0.0, 1.0-(10**-5), num=10)
     lambda2_range = np.linspace(0.0, 1.0-(10**-5), num=10)
-    combinations = [(lambda1, lambda2) for lambda1 in lambda1_range for lambda2 in lambda2_range if lambda1+lambda2<(1-10**-6)]
+    combinations = [(lambda1, lambda2) for lambda1 in lambda1_range for lambda2 in lambda2_range if lambda1+lambda2<=1]+[(0,1),(1,0)]
     print(lambda1_range)
 
     best_lambda1 = -1
