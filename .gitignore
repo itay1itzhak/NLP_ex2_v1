@@ -1,3 +1,8 @@
 
-*.xml
+.idea/ex2_v1.iml
+.idea/ex2_v1.iml
+.idea/libraries/R_User_Library.xml
+.idea/misc.xml
+.idea/vcs.xml
 .idea/workspace.xml
+.idea/misc.xml
