@@ -20,6 +20,14 @@ S_train = du.docs_to_indices(docs_train, word_to_num)
 docs_dev = du.load_dataset('data/lm/ptb-dev.txt')
 S_dev = du.docs_to_indices(docs_dev, word_to_num)
 
+
+################################# DELETE THIS #############################
+
+prob_from_bigram = 0
+prob_from_trigram = 0
+
+###########################################################################
+
 def train_ngrams(dataset):
     """
         Gets an array of arrays of indexes, each one corresponds to a word.
@@ -73,33 +81,36 @@ def evaluate_ngrams(eval_dataset, trigram_counts, bigram_counts, unigram_counts,
         if model == "bigram":
             if (prev_word,word) in bigram_counts:
               prob = (bigram_counts[(prev_word, word)] + 0.0) / \
-                       unigram_counts[prev_word]
+                           unigram_counts[prev_word]
+              #print(num_to_word[prev_word] ,num_to_word[word])
+              #print(bigram_counts[(prev_word, word)])
+              #print(unigram_counts[prev_word])
+              #print("---------------------------")
             else:
                 prob = 0.0
 
         if model == "trigram":
             if (prev_to_prev_word,prev_word,word) in trigram_counts:
                 prob = (trigram_counts[(prev_to_prev_word, prev_word, word)] + 0.0) \
-                       / bigram_counts[(prev_to_prev_word, prev_word)]
-                      #/ bigram_counts[(prev_word, word)] #this according to lecture notes slide 27
+                         / bigram_counts[(prev_to_prev_word, prev_word)]
+                        # / bigram_counts[(prev_word, word)] #this according to lecture notes slide 27
             else:
                 prob = 0.0
 
         return prob
 
     l = 0
-
     num_of_words = 0
+
     for sentense in eval_dataset:
         for i,word in enumerate(sentense[2:]):
             num_of_words += 1
-            prob = lambda1 * calc_prob(sentense,i+2,word, trigram_counts, bigram_counts, unigram_counts, train_token_count,"trigram")+ \
+            prob = lambda1 * calc_prob(sentense,i+2,word, trigram_counts, bigram_counts, unigram_counts, train_token_count,"trigram") + \
                    lambda2 * calc_prob(sentense,i+2,word, trigram_counts, bigram_counts, unigram_counts, train_token_count,"bigram") +\
                    (1-lambda1-lambda2) * calc_prob(sentense,i+2,word, trigram_counts, bigram_counts, unigram_counts, train_token_count,"unigram")
             l += np.log2(prob)
-
     l /= num_of_words
-    perplexity = 2 ** -l
+    perplexity += 2 ** -l
     ### END YOUR CODE
     return perplexity
 
@@ -116,7 +127,34 @@ def test_ngram():
     perplexity = evaluate_ngrams(S_dev, trigram_counts, bigram_counts, unigram_counts, token_count, 0.5, 0.4)
     print "#perplexity: " + str(perplexity)
     ### YOUR CODE HERE
+    print(vocabsize)
     ### END YOUR CODE
 
+def gridSearch():
+    trigram_counts, bigram_counts, unigram_counts, token_count = train_ngrams(S_train)
+    lambda1_range =  np.linspace(0.0, 1.0-(10**-5), num=10)
+    lambda2_range = np.linspace(0.0, 1.0-(10**-5), num=10)
+    combinations = [(lambda1, lambda2) for lambda1 in lambda1_range for lambda2 in lambda2_range if lambda1+lambda2<(1-10**-6)]
+    print(lambda1_range)
+
+    best_lambda1 = -1
+    best_lambda2 = -1
+    best_perplexity = float('inf')
+    for (lambda1,lambda2) in combinations:
+        perplexity = evaluate_ngrams(S_dev, trigram_counts, bigram_counts, unigram_counts, token_count, lambda1, lambda2)
+        print("lambda1:", lambda1)
+        print("lambda2:", lambda2)
+        print("perplexity:", perplexity)
+        print("---------------------")
+        if best_perplexity > perplexity:
+            best_perplexity = perplexity
+            best_lambda1 = lambda1
+            best_lambda2 = lambda2
+    print("Best lambda1:", best_lambda1)
+    print("Best lambda2:", best_lambda2)
+    print("Best perplexity:", best_perplexity)
+
+
 if __name__ == "__main__":
-    test_ngram()
+    #test_ngram()
+    gridSearch()
