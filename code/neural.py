@@ -69,15 +69,22 @@ def forward_backward_prop(data, labels, params, dimensions):
 
     ### YOUR CODE HERE: forward propagation
     forward_results = forward(data, labels, params, dimensions)
-    Z1 = forward_results['Z1']
-    A = forward_results['A']
+    z1 = forward_results['z1']
     h = forward_results['h']
+    z2 = forward_results['z2']
     y_hat = forward_results['y_hat']
-    J = forward_results['J']
+    cost = forward_results['J']
     ### END YOUR CODE
 
     ### YOUR CODE HERE: backward propagation
-    raise NotImplementedError
+    grad_softmax = y_hat - labels
+    grad_hidden = np.dot(grad_softmax,W2.T) * sigmoid_grad(h)
+
+    gradW1 = np.dot(grad_hidden,data.T)
+    gradb1 = np.sum(grad_hidden)
+    gradW2 = np.dot(grad_softmax,h.T)
+    gradb2 = np.sum(grad_softmax)
+
     ### END YOUR CODE
 
     ### Stack gradients (do not modify)
