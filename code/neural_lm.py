@@ -12,7 +12,7 @@ from sgd import *
 
 VOCAB_EMBEDDING_PATH = "data/lm/vocab.embeddings.glove.txt"
 BATCH_SIZE = 50
-NUM_OF_SGD_ITERATIONS = 40000
+NUM_OF_SGD_ITERATIONS = 400#00
 LEARNING_RATE = 0.3
 
 def load_vocab_embeddings(path=VOCAB_EMBEDDING_PATH):
@@ -76,7 +76,11 @@ def lm_wrapper(in_word_index, out_word_index, num_to_word_embedding, dimensions,
 
     # Construct the data batch and run you backpropogation implementation
     ### YOUR CODE HERE
-    raise NotImplementedError
+    for i in range(BATCH_SIZE):
+        data[i] = num_to_word_embedding[in_word_index[i]]
+        labels[i] = int_to_one_hot(out_word_index[i], output_dim)
+    cost, grad = forward_backward_prop(data, labels, params, dimensions)
+    print(cost)
     ### END YOUR CODE
 
     cost /= BATCH_SIZE
@@ -94,7 +98,18 @@ def eval_neural_lm(eval_data_path):
 
     perplexity = 0
     ### YOUR CODE HERE
-    raise NotImplementedError
+    l = 0
+    for i in range(num_of_examples):
+        x = num_to_word_embedding[in_word_index[i]]
+        label = int_to_one_hot(out_word_index[i],output_dim)
+
+        forward_results = forward(x, label, params, dimensions)
+        y_hat = forward_results['y_hat']
+        prob_of_correct_word = y_hat.T[out_word_index[i]].item()
+        #print(prob_of_correct_word)
+        l += np.log2(prob_of_correct_word)
+    l /= num_of_examples
+    perplexity = 2 ** -l
     ### END YOUR CODE
 
     return perplexity
