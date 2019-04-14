@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a2c10503-502e-4973-987a-96aad889c803" name="Default Changelist" comment="Q2 - part3">
+    <list default="true" id="a2c10503-502e-4973-987a-96aad889c803" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/neural.py" beforeDir="false" afterPath="$PROJECT_DIR$/code/neural.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/code/neural_lm.py" beforeDir="false" afterPath="$PROJECT_DIR$/code/neural_lm.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/ngram_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/code/ngram_model.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -16,8 +18,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/code/ngram_model.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="98">
-              <caret line="101" selection-start-line="101" selection-end-line="112" selection-end-column="25" />
+            <state relative-caret-position="217">
+              <caret line="156" selection-start-line="156" selection-end-line="156" />
               <folding>
                 <element signature="e#25#59#0" expanded="true" />
               </folding>
@@ -25,32 +27,20 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/code/neural.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="35" column="21" lean-forward="true" selection-start-line="35" selection-start-column="21" selection-end-line="35" selection-end-column="21" />
+            <state relative-caret-position="182">
+              <caret line="35" column="36" selection-start-line="35" selection-start-column="36" selection-end-line="35" selection-end-column="36" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/code/neural_lm.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="108" column="9" selection-start-line="108" selection-start-column="9" selection-end-line="108" selection-end-column="9" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/code/sgd.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-882">
-              <caret line="72" column="18" selection-start-line="72" selection-start-column="14" selection-end-line="72" selection-end-column="18" />
-              <folding>
-                <element signature="e#107#118#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="187">
+              <caret line="18" column="15" lean-forward="true" selection-start-line="18" selection-start-column="15" selection-end-line="18" selection-end-column="15" />
             </state>
           </provider>
         </entry>
@@ -59,7 +49,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>print</find>
       <find>p</find>
       <find>wra</find>
       <find>in_word_index</find>
@@ -67,8 +56,12 @@
       <find>shuffle_training_data</find>
       <find>cost</find>
       <find>NUM_OF_SGD_ITERATIONS</find>
-      <find>iter</find>
       <find>vocabsize</find>
+      <find>perplexity</find>
+      <find>iter</find>
+      <find>print(</find>
+      <find>print</find>
+      <find>num_to_word_embedding</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -80,17 +73,17 @@
         <option value="$PROJECT_DIR$/code/sgd.py" />
         <option value="$PROJECT_DIR$/code/sigmoid.py" />
         <option value="$PROJECT_DIR$/code/softmax.py" />
-        <option value="$PROJECT_DIR$/code/ngram_model.py" />
         <option value="$PROJECT_DIR$/code/gradcheck.py" />
+        <option value="$PROJECT_DIR$/code/ngram_model.py" />
         <option value="$PROJECT_DIR$/code/neural.py" />
         <option value="$PROJECT_DIR$/code/neural_lm.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-9" />
-    <option name="y" value="-9" />
-    <option name="width" value="979" />
+    <option name="x" value="-10" />
+    <option name="y" value="-10" />
+    <option name="width" value="980" />
     <option name="height" value="1040" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -99,6 +92,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -134,7 +128,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -242,8 +235,8 @@
       <list>
         <item itemvalue="Python.neural_lm" />
         <item itemvalue="Python.neural" />
-        <item itemvalue="Python.gradcheck" />
         <item itemvalue="Python.ngram_model" />
+        <item itemvalue="Python.gradcheck" />
       </list>
     </recent_temporary>
   </component>
@@ -279,19 +272,26 @@
       <option name="project" value="LOCAL" />
       <updated>1555061251137</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Q2 - part4, bad perplexity in Q1 and Q2">
+      <created>1555077826504</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1555077826504</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.12557831" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.12491738" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.329429" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49966952" visible="true" weight="0.43484625" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49966952" visible="true" weight="0.33674964" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.36163983" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -309,7 +309,8 @@
     <MESSAGE value="Q1 - grid_Search added, bug in prob calc" />
     <MESSAGE value="Q1 - grid_Search added, bug in prob calc(2)" />
     <MESSAGE value="Q2 - part3" />
-    <option name="LAST_COMMIT_MESSAGE" value="Q2 - part3" />
+    <MESSAGE value="Q2 - part4, bad perplexity in Q1 and Q2" />
+    <option name="LAST_COMMIT_MESSAGE" value="Q2 - part4, bad perplexity in Q1 and Q2" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/code/data_utils/__init__.py">
@@ -355,37 +356,37 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/code/ngram_model.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="98">
-          <caret line="101" selection-start-line="101" selection-end-line="112" selection-end-column="25" />
-          <folding>
-            <element signature="e#25#59#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/code/sgd.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-882">
-          <caret line="72" column="18" selection-start-line="72" selection-start-column="14" selection-end-line="72" selection-end-column="18" />
+        <state relative-caret-position="124">
+          <caret line="146" column="42" selection-start-line="146" selection-start-column="37" selection-end-line="146" selection-end-column="42" />
           <folding>
             <element signature="e#107#118#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/code/neural_lm.py">
+    <entry file="file://$PROJECT_DIR$/code/ngram_model.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="108" column="9" selection-start-line="108" selection-start-column="9" selection-end-line="108" selection-end-column="9" />
+        <state relative-caret-position="217">
+          <caret line="156" selection-start-line="156" selection-end-line="156" />
+          <folding>
+            <element signature="e#25#59#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/code/neural.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="35" column="21" lean-forward="true" selection-start-line="35" selection-start-column="21" selection-end-line="35" selection-end-column="21" />
+        <state relative-caret-position="182">
+          <caret line="35" column="36" selection-start-line="35" selection-start-column="36" selection-end-line="35" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/neural_lm.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="18" column="15" lean-forward="true" selection-start-line="18" selection-start-column="15" selection-end-line="18" selection-end-column="15" />
         </state>
       </provider>
     </entry>

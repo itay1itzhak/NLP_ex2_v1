@@ -9,11 +9,11 @@ from numpy import *
 from neural import *
 from sgd import *
 
-
 VOCAB_EMBEDDING_PATH = "data/lm/vocab.embeddings.glove.txt"
 BATCH_SIZE = 50
-NUM_OF_SGD_ITERATIONS = 400#00
-LEARNING_RATE = 0.3
+NUM_OF_SGD_ITERATIONS = 40000
+LEARNING_RATE = 0.1
+
 
 def load_vocab_embeddings(path=VOCAB_EMBEDDING_PATH):
     result = []
@@ -28,6 +28,7 @@ def load_vocab_embeddings(path=VOCAB_EMBEDDING_PATH):
             index += 1
     return result
 
+
 def load_data_as_sentences(path, word_to_num):
     """
     Conv:erts the training data to an array of integer arrays.
@@ -41,6 +42,7 @@ def load_data_as_sentences(path, word_to_num):
     docs_data = du.load_dataset(path)
     S_data = du.docs_to_indices(docs_data, word_to_num)
     return docs_data, S_data
+
 
 def convert_to_lm_dataset(S):
     """
@@ -59,18 +61,20 @@ def convert_to_lm_dataset(S):
             out_word_index.append(sentence[i])
     return in_word_index, out_word_index
 
+
 def shuffle_training_data(in_word_index, out_word_index):
     combined = zip(in_word_index, out_word_index)
     random.shuffle(combined)
     return zip(*combined)
+
 
 def int_to_one_hot(number, dim):
     res = np.zeros(dim)
     res[number] = 1.0
     return res
 
-def lm_wrapper(in_word_index, out_word_index, num_to_word_embedding, dimensions, params):
 
+def lm_wrapper(in_word_index, out_word_index, num_to_word_embedding, dimensions, params):
     data = np.zeros([BATCH_SIZE, input_dim])
     labels = np.zeros([BATCH_SIZE, output_dim])
 
@@ -87,6 +91,7 @@ def lm_wrapper(in_word_index, out_word_index, num_to_word_embedding, dimensions,
     grad /= BATCH_SIZE
     return cost, grad
 
+
 def eval_neural_lm(eval_data_path):
     """
     Evaluate perplexity (use dev set when tuning and test at the end)
@@ -99,25 +104,46 @@ def eval_neural_lm(eval_data_path):
     perplexity = 0
     ### YOUR CODE HERE
     l = 0
+
+    mistakes = 0
+    hits = 0
+    better_than_chance = 0
+
     for i in range(num_of_examples):
         x = num_to_word_embedding[in_word_index[i]]
-        label = int_to_one_hot(out_word_index[i],output_dim)
-
+        label = int_to_one_hot(out_word_index[i], output_dim)
         forward_results = forward(x, label, params, dimensions)
         y_hat = forward_results['y_hat']
         prob_of_correct_word = y_hat.T[out_word_index[i]].item()
-        #print(prob_of_correct_word)
+        #####################
+        #if 8 < i < 20:
+         #   print(num_to_word[in_word_index[i]] + " : " + num_to_word[out_word_index[i]])
+          #  print(prob_of_correct_word)
+        if prob_of_correct_word > (1.0 / vocabsize):
+            better_than_chance += 1
+        if prob_of_correct_word == np.max(y_hat.T):
+            hits += 1
+        else:
+            mistakes += 1
+            # prob_of_correct_word = 1.0/vocabsize
+        ##########################
+        # l += np.log2(prob_of_correct_word)
         l += np.log2(prob_of_correct_word)
     l /= num_of_examples
-    perplexity = 2 ** -l
+    print(l)
+    perplexity = 2 ** (-l)
+
+    print("better_than_chance:", (better_than_chance + 0.0) / num_of_examples)
+
     ### END YOUR CODE
 
     return perplexity
 
+
 if __name__ == "__main__":
     # Load the vocabulary
     vocab = pd.read_table("data/lm/vocab.ptb.txt", header=None, sep="\s+",
-			 index_col=0, names=['count', 'freq'], )
+                          index_col=0, names=['count', 'freq'], )
 
     vocabsize = 2000
     num_to_word = dict(enumerate(vocab.index[:vocabsize]))
@@ -133,7 +159,7 @@ if __name__ == "__main__":
     random.seed(31415)
     np.random.seed(9265)
     in_word_index, out_word_index = shuffle_training_data(in_word_index, out_word_index)
-    startTime=time.time()
+    startTime = time.time()
 
     # Training should happen here
     # Initialize parameters randomly
@@ -143,14 +169,14 @@ if __name__ == "__main__":
     output_dim = vocabsize
     dimensions = [input_dim, hidden_dim, output_dim]
     params = np.random.randn((input_dim + 1) * hidden_dim + (
-        hidden_dim + 1) * output_dim, )
+            hidden_dim + 1) * output_dim, )
     print "#params: " + str(len(params))
     print "#train examples: " + str(num_of_examples)
 
     # run SGD
     params = sgd(
-            lambda vec:lm_wrapper(in_word_index, out_word_index, num_to_word_embedding, dimensions, vec),
-            params, LEARNING_RATE, NUM_OF_SGD_ITERATIONS, None, True, 1000)
+        lambda vec: lm_wrapper(in_word_index, out_word_index, num_to_word_embedding, dimensions, vec),
+        params, LEARNING_RATE, NUM_OF_SGD_ITERATIONS, None, True, 1000)
 
     print "training took %d seconds" % (time.time() - startTime)
 

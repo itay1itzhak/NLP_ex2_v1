@@ -7,6 +7,7 @@ from softmax import softmax
 from sigmoid import sigmoid, sigmoid_grad
 from gradcheck import gradcheck_naive
 
+
 def forward(data, label, params, dimensions):
     """
     runs a forward pass and returns the probability of the correct word for eval.
@@ -17,8 +18,8 @@ def forward(data, label, params, dimensions):
     ofs = 0
     Dx, H, Dy = (dimensions[0], dimensions[1], dimensions[2])
 
-    params[ofs:ofs+ Dx * H]
-    W1 = np.reshape(params[ofs:ofs+ Dx * H], (Dx, H))
+    params[ofs:ofs + Dx * H]
+    W1 = np.reshape(params[ofs:ofs + Dx * H], (Dx, H))
     ofs += Dx * H
     b1 = np.reshape(params[ofs:ofs + H], (1, H))
     ofs += H
@@ -28,9 +29,9 @@ def forward(data, label, params, dimensions):
 
     # Compute the probability
     ### YOUR CODE HERE: forward propagation
-    z1 = np.dot(data,W1) + b1
+    z1 = np.dot(data, W1) + b1
     h = sigmoid(z1)
-    z2 = np.dot(h,W2) + b2
+    z2 = np.dot(h, W2) + b2
     y_hat = softmax(z2)
     J = -np.sum(label*np.log(y_hat))
     return {"z1": z1,
@@ -39,6 +40,7 @@ def forward(data, label, params, dimensions):
             "y_hat": y_hat,
             "J": J}
     ### END YOUR CODE
+
 
 def forward_backward_prop(data, labels, params, dimensions):
     """
@@ -59,7 +61,7 @@ def forward_backward_prop(data, labels, params, dimensions):
     ofs = 0
     Dx, H, Dy = (dimensions[0], dimensions[1], dimensions[2])
 
-    W1 = np.reshape(params[ofs:ofs+ Dx * H], (Dx, H))
+    W1 = np.reshape(params[ofs:ofs + Dx * H], (Dx, H))
     ofs += Dx * H
     b1 = np.reshape(params[ofs:ofs + H], (1, H))
     ofs += H
@@ -78,18 +80,18 @@ def forward_backward_prop(data, labels, params, dimensions):
 
     ### YOUR CODE HERE: backward propagation
     grad_softmax = y_hat - labels
-    grad_hidden = np.dot(grad_softmax,W2.T) * sigmoid_grad(h)
+    grad_hidden = np.dot(grad_softmax, W2.T) * sigmoid_grad(h)
 
-    gradW1 = np.dot(data.T,grad_hidden)
-    gradb1 = np.sum(grad_hidden,axis=0)
-    gradW2 = np.dot(h.T,grad_softmax)
-    gradb2 = np.sum(grad_softmax,axis=0)
+    gradW1 = np.dot(data.T, grad_hidden)
+    gradb1 = np.sum(grad_hidden, axis=0)
+    gradW2 = np.dot(h.T, grad_softmax)
+    gradb2 = np.sum(grad_softmax, axis=0)
 
     ### END YOUR CODE
 
     ### Stack gradients (do not modify)
     grad = np.concatenate((gradW1.flatten(), gradb1.flatten(),
-        gradW2.flatten(), gradb2.flatten()))
+                           gradW2.flatten(), gradb2.flatten()))
 
     return cost, grad
 
@@ -103,16 +105,16 @@ def sanity_check():
 
     N = 20
     dimensions = [10, 5, 10]
-    data = np.random.randn(N, dimensions[0])   # each row will be a datum
+    data = np.random.randn(N, dimensions[0])  # each row will be a datum
     labels = np.zeros((N, dimensions[2]))
     for i in xrange(N):
-        labels[i, random.randint(0,dimensions[2]-1)] = 1
+        labels[i, random.randint(0, dimensions[2] - 1)] = 1
 
     params = np.random.randn((dimensions[0] + 1) * dimensions[1] + (
-        dimensions[1] + 1) * dimensions[2], )
+            dimensions[1] + 1) * dimensions[2], )
 
     gradcheck_naive(lambda params:
-        forward_backward_prop(data, labels, params, dimensions), params)
+                    forward_backward_prop(data, labels, params, dimensions), params)
 
 
 def your_sanity_checks():
@@ -124,7 +126,7 @@ def your_sanity_checks():
     """
     print "Running your sanity checks..."
     ### YOUR CODE HERE
-    #raise NotImplementedError
+    # raise NotImplementedError
     ### END YOUR CODE
 
 
