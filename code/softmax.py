@@ -39,9 +39,9 @@ def softmax(x):
         x = e_x / e_x_sum
     else:
         # Vector
-        max = x.max()
+        max = x.max(axis=0)
         e_x = np.exp(x - max)
-        e_x_sum = e_x.sum()
+        e_x_sum = e_x.sum(axis=0)
         x = e_x / e_x_sum
 
     assert x.shape == orig_shape
